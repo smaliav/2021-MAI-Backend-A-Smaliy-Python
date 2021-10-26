@@ -22,7 +22,6 @@ class LRUCache:
         i = self.__get_queue_idx(key)
         self.heap_queue[i] = (cur_time_ms, key)
         heapq.heapify(self.heap_queue)
-        return
 
     def __remove_oldest(self) -> None:
         oldest = heapq.heappop(self.heap_queue)
@@ -49,7 +48,6 @@ class LRUCache:
         i = self.__get_queue_idx(key)
         del self.heap_queue[i]
         heapq.heapify(self.heap_queue)
-        return
 
     def to_string(self) -> str:
         res = "LRU Cache, the higher - the older. Columns: idx, key, value, priority\n"
