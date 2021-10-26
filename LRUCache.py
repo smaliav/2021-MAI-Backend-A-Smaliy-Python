@@ -16,7 +16,7 @@ class LRUCache:
         self.data[key] = value
         heapq.heappush(self.heap_queue, (cur_time_ms, key))
 
-    def __update(self, key: str, value: str):
+    def __update(self, key: str, value: str) -> None:
         cur_time_ms = round(time.time() * 1000)
         self.data[key] = value
         i = self.__get_queue_idx(key)
@@ -28,7 +28,7 @@ class LRUCache:
         oldest = heapq.heappop(self.heap_queue)
         del self.data[oldest[1]]
 
-    def __get_queue_idx(self, key: str):
+    def __get_queue_idx(self, key: str) -> int:
         for i, (_, k) in enumerate(self.heap_queue):
             if k == key:
                 return i
