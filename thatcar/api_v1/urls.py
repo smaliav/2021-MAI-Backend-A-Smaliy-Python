@@ -1,9 +1,8 @@
-from django.contrib import admin
 from django.urls import path, include
 
 
 urlpatterns = [
-    path('car/', include('car.urls')),        # Car
-    path('user/', include('user.urls')),      # User
-    path('advert/', include('advert.urls')),  # User
+    path('cars/', include('car.urls')),        # Car
+    path('users/', include('user.urls')),      # User
+    path('adverts/', include('advert.urls')),  # Adverts
 ]

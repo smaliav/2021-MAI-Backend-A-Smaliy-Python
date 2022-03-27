@@ -1,8 +1,12 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+
 from .views import *
 
 
+router = routers.DefaultRouter()
+router.register(r'', UserViewSet)
+
 urlpatterns = [
-    path('<int:user_id>/', get_user_by_id, name="get_user_by_id"),
-    path('<int:user_id>/advert/', post_advert_by_user, name="post_advert_by_user"),
+    path('', include(router.urls)),
 ]

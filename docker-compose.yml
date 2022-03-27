@@ -8,7 +8,9 @@ services:
       POSTGRES_DB: "thatcar_db"
       POSTGRES_USER: "thatcar"
       POSTGRES_PASSWORD: "123456"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
+      - .:/var/lib/postgresql/data
       - .:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"

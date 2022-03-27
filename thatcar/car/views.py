@@ -1,94 +1,23 @@
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET
+from rest_framework import viewsets
 
 from .serializers import *
 
 
-@require_GET
-def get_car_by_id(request, car_id):
-    try:
-        car = Car.objects.filter(id=car_id).get()
-    except Car.DoesNotExist:
-        return JsonResponse(
-            {
-                'message': 'Not found',
-                'code': 404
-            }
-        )
-
-    data = CarSerializer(car).data
-    return JsonResponse(data)
-    # return JsonResponse(
-    #     {
-    #         'id': car_id,
-    #         'brand': 'Volkswagen',
-    #         'model': 'Golf VII',
-    #         'year': 2014,
-    #         'category': "City Hatch"
-    #     }
-    # )
+class CarColorViewSet(viewsets.ModelViewSet):
+    queryset = CarColor.objects.all().order_by('id')
+    serializer_class = CarColorSerializer
 
 
-@require_GET
-def get_cars_by_brand_name(request, brand_name):
-    return JsonResponse(
-        {
-            'brand': brand_name,
-            'cars': [
-                {
-                    'id': 1,
-                    'brand': brand_name,
-                    'model': 'Golf VII',
-                    'year': 2014,
-                    'category': "City Hatch"
-                },
-                {
-                    'id': 2,
-                    'brand': brand_name,
-                    'model': 'Passat',
-                    'year': 2011,
-                    'category': "City sedan"
-                },
-                {
-                    'id': 3,
-                    'brand': brand_name,
-                    'model': 'Tiguan',
-                    'year': 2019,
-                    'category': "City Crossover"
-                }
-            ]
-        }
-    )
+class CarViewSet(viewsets.ModelViewSet):
+    queryset = Car.objects.all().order_by('id')
+    serializer_class = CarSerializer
 
 
-@require_GET
-def get_cars_by_category_id(request, category_id):
-    return JsonResponse(
-        {
-            'category_id': category_id,
-            'category': 'City Hatch',
-            'cars': [
-                {
-                    'id': 1,
-                    'brand': 'Volkswagen',
-                    'model': 'Golf VII',
-                    'year': 2014,
-                    'category': "City Hatch"
-                },
-                {
-                    'id': 4,
-                    'brand': 'Audi',
-                    'model': 'A3',
-                    'year': 2020,
-                    'category': "City Hatch"
-                },
-                {
-                    'id': 5,
-                    'brand': 'Mini',
-                    'model': 'Cooper',
-                    'year': 2010,
-                    'category': "City Hatch"
-                }
-            ]
-        }
-    )
+class CarBrandViewSet(viewsets.ModelViewSet):
+    queryset = CarBrand.objects.all().order_by('id')
+    serializer_class = CarBrandSerializer
+
+
+class CarCategoryViewSet(viewsets.ModelViewSet):
+    queryset = CarCategory.objects.all().order_by('id')
+    serializer_class = CarCategorySerializer
