@@ -1,18 +1,32 @@
-from django.views.decorators.http import require_GET
 from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+
+from .serializers import *
 
 
 @require_GET
 def get_car_by_id(request, car_id):
-    return JsonResponse(
-        {
-            'id': car_id,
-            'brand': 'Volkswagen',
-            'model': 'Golf VII',
-            'year': 2014,
-            'category': "City Hatch"
-        }
-    )
+    try:
+        car = Car.objects.filter(id=car_id).get()
+    except Car.DoesNotExist:
+        return JsonResponse(
+            {
+                'message': 'Not found',
+                'code': 404
+            }
+        )
+
+    data = CarSerializer(car).data
+    return JsonResponse(data)
+    # return JsonResponse(
+    #     {
+    #         'id': car_id,
+    #         'brand': 'Volkswagen',
+    #         'model': 'Golf VII',
+    #         'year': 2014,
+    #         'category': "City Hatch"
+    #     }
+    # )
 
 
 @require_GET
